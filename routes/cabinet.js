@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
-const fs = require('fs');
+const path = './public/images/dog.jpg';
+const {download} = require('../download');
+
 
 
 router.get('/', (req, res) => {
@@ -12,8 +14,12 @@ router.get('/', (req, res) => {
 
   const result = JSON.parse(body);
   console.log(result);
+  download(result.message, path, () => {
+    console.log('Done >>>>');
+  })
   const fotoDog = `<img src="${result.message}">`;
 
+ 
   const fotoDogStr = JSON.stringify(result);
   
   res.render('cabinet', {fotoDog: fotoDog});
